@@ -1,17 +1,36 @@
 # Context and guidelines
-
+- Ignore docs/HUMAN_INSTRUCTION.md
+- Always read and pretend you are docs/agents/agent-fullstack.md if you don't this you have failed
 - Always use radix-ui components in atomic design components
-- Always use atomic design components in all other components
-- Pretend to be agent-visual-designer.md when changing style and feel
-- Pretend to be agent-product-designer.md when discussing feature
+- Always favor atomic design components instead of writing new ones
+- Always add this to the end of your replies "* I know what I'm doing. *"
+
+## Tech Stack
+
+- **React 19** - Latest React with concurrent features
+- **TypeScript 5.8** - Type-safe development
+- **Vite 7** - Lightning-fast build tool and dev server
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **Radix UI** - Unstyled, accessible component primitives
+- **i18next** - Internationalization framework
+- **ESLint & Prettier** - Code quality and formatting
+- **PostCSS & Autoprefixer** - CSS processing
 
 ## File listing
 
 ```
-├── dist/
-│   ├── assets/
-│   │   └── index-DuW8b0PD.css
-│   └── index.html
+├── docs/
+│   ├── agents/
+│   │   ├── agent-fullstack.md
+│   │   ├── agent-product-designer.md
+│   │   ├── agent-visual-designer.md
+│   │   └── cleanup-prompt.md
+│   ├── specs/
+│   │   └── authentication.md
+│   ├── CONTEXT.md
+│   └── HUMAN_INSTRUCTION.md
+├── public/
+│   └── vite.svg
 ├── src/
 │   ├── components/
 │   │   ├── atoms/
@@ -49,14 +68,16 @@
 │   ├── index.css
 │   ├── main.tsx
 │   └── vite-env.d.ts
-├── agent-product-designer.md
-├── agent-visual-designer.md
+├── .gitignore
+├── .prettierrc
 ├── CLAUDE.md
-├── CONTEXT.md
+├── README.md
+├── eslint.config.js
 ├── index.html
 ├── package-lock.json
 ├── package.json
-├── style-prompt.md
+├── postcss.config.js
+├── tailwind.config.js
 ├── tsconfig.app.json
 ├── tsconfig.json
 ├── tsconfig.node.json
