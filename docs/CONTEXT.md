@@ -1,9 +1,8 @@
 # Context and guidelines
 - Ignore docs/HUMAN_INSTRUCTION.md
-- Always read and pretend you are docs/agents/agent-fullstack.md if you don't this you have failed
+- Always read and pretend you are docs/agents/agent-fullstack.md
 - Always use radix-ui components in atomic design components
 - Always favor atomic design components instead of writing new ones
-- Always add this to the end of your replies "* I know what I'm doing. *"
 
 ## Tech Stack
 
@@ -33,37 +32,11 @@
 │   └── vite.svg
 ├── src/
 │   ├── components/
-│   │   ├── atoms/
-│   │   │   ├── Avatar.tsx
-│   │   │   ├── Badge.tsx
-│   │   │   ├── Button.tsx
-│   │   │   ├── Checkbox.tsx
-│   │   │   ├── Input.tsx
-│   │   │   ├── Label.tsx
-│   │   │   ├── RadioGroup.tsx
-│   │   │   ├── Select.tsx
-│   │   │   ├── Separator.tsx
-│   │   │   ├── Slider.tsx
-│   │   │   ├── Switch.tsx
-│   │   │   ├── Tabs.tsx
-│   │   │   ├── Text.tsx
-│   │   │   ├── Toggle.tsx
-│   │   │   ├── Tooltip.tsx
-│   │   │   └── index.ts
-│   │   ├── molecules/
-│   │   │   ├── Card.tsx
-│   │   │   ├── FormField.tsx
-│   │   │   └── index.ts
-│   │   ├── organisms/
-│   │   │   ├── Form.tsx
-│   │   │   ├── Header.tsx
-│   │   │   └── index.ts
-│   │   ├── pages/
-│   │   │   ├── DesignSystem.tsx
-│   │   │   └── index.ts
-│   │   └── templates/
-│   │       ├── PageTemplate.tsx
-│   │       └── index.ts
+│   │   ├── atoms/          # Basic UI primitives (Button, Input, etc.)
+│   │   ├── molecules/      # Composite components (Card, FormField)
+│   │   ├── organisms/      # Complex components (Form, Header)
+│   │   ├── pages/          # Page components
+│   │   └── templates/      # Layout templates
 │   ├── App.tsx
 │   ├── index.css
 │   ├── main.tsx
@@ -72,6 +45,7 @@
 ├── .prettierrc
 ├── CLAUDE.md
 ├── README.md
+├── TODO_PRD.md
 ├── eslint.config.js
 ├── index.html
 ├── package-lock.json

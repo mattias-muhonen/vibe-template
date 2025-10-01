@@ -1,1 +1,1 @@
-You must read docs/CONTEXT.md or you have failed
+Read docs/CONTEXT.md for project context and guidelines

@@ -8,8 +8,8 @@ Get started:
 5. Check out specs/, there is one "spec" document there that describes an authentication feature.
 
 Get coding:
-1. You should have a PRD as to what the product should be
-2. Build a UI level mock MVP
+1. You should have a PRD as to what the product should be. Example provide in TODO_PRD.md
+2. Goal is to build a UI level mock MVP
 3. Use the agent personalities or draft your own
 4. Create new spec files based on the template, tweak the template and play around
 5. Keep CONTEXT.md up to date
