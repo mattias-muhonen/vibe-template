@@ -107,10 +107,10 @@ const DesignSystem: React.FC = () => {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Checkbox</h2>
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <div className="flex items-center space-x-2">
-                    <Checkbox 
-                      id="terms" 
+                    <Checkbox
+                      id="terms"
                       checked={checkboxChecked}
-                      onCheckedChange={setCheckboxChecked}
+                      onChange={(e) => setCheckboxChecked(e.target.checked)}
                     />
                     <Label htmlFor="terms">Accept terms and conditions</Label>
                   </div>
@@ -152,20 +152,16 @@ const DesignSystem: React.FC = () => {
               <section>
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">RadioGroup</h2>
                 <div className="bg-white p-6 rounded-lg shadow-sm">
-                  <RadioGroup value={radioValue} onValueChange={setRadioValue}>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroup.Item value="option1" id="r1" />
-                      <Label htmlFor="r1">Option 1</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroup.Item value="option2" id="r2" />
-                      <Label htmlFor="r2">Option 2</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroup.Item value="option3" id="r3" />
-                      <Label htmlFor="r3">Option 3</Label>
-                    </div>
-                  </RadioGroup>
+                  <RadioGroup
+                    name="demo-radio"
+                    value={radioValue}
+                    onChange={setRadioValue}
+                    options={[
+                      { value: 'option1', label: 'Option 1' },
+                      { value: 'option2', label: 'Option 2' },
+                      { value: 'option3', label: 'Option 3' }
+                    ]}
+                  />
                 </div>
               </section>
 
@@ -175,17 +171,17 @@ const DesignSystem: React.FC = () => {
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <div className="max-w-md">
                     <Label htmlFor="select">Select an option</Label>
-                    <Select value={selectValue} onValueChange={setSelectValue}>
-                      <Select.Trigger id="select">
-                        <Select.Value placeholder="Select..." />
-                      </Select.Trigger>
-                      <Select.Content>
-                        <Select.Item value="apple">Apple</Select.Item>
-                        <Select.Item value="banana">Banana</Select.Item>
-                        <Select.Item value="orange">Orange</Select.Item>
-                        <Select.Item value="grape">Grape</Select.Item>
-                      </Select.Content>
-                    </Select>
+                    <Select
+                      id="select"
+                      value={selectValue}
+                      onChange={(e) => setSelectValue(e.target.value)}
+                      options={[
+                        { value: 'apple', label: 'Apple' },
+                        { value: 'banana', label: 'Banana' },
+                        { value: 'orange', label: 'Orange' },
+                        { value: 'grape', label: 'Grape' }
+                      ]}
+                    />
                   </div>
                 </div>
               </section>
@@ -213,9 +209,9 @@ const DesignSystem: React.FC = () => {
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <div className="max-w-md space-y-4">
                     <Label>Value: {sliderValue[0]}</Label>
-                    <Slider 
-                      value={sliderValue} 
-                      onValueChange={setSliderValue}
+                    <Slider
+                      value={sliderValue[0]}
+                      onChange={(e) => setSliderValue([parseInt(e.target.value)])}
                       max={100}
                       step={1}
                     />
@@ -228,10 +224,10 @@ const DesignSystem: React.FC = () => {
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Switch</h2>
                 <div className="bg-white p-6 rounded-lg shadow-sm">
                   <div className="flex items-center space-x-2">
-                    <Switch 
+                    <Switch
                       id="airplane-mode"
                       checked={switchChecked}
-                      onCheckedChange={setSwitchChecked}
+                      onChange={(e) => setSwitchChecked(e.target.checked)}
                     />
                     <Label htmlFor="airplane-mode">Airplane mode</Label>
                   </div>
