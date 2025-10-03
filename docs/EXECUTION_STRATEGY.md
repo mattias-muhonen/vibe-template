@@ -2,9 +2,28 @@
 
 ## Overview
 
-This document defines the standard execution strategy for implementing features in this project. Every feature follows the same pattern: **Backend → Tests → Frontend**, ensuring a solid foundation before building the user interface.
+This document defines the standard execution strategy for implementing features in this project using **Test-Driven Development (TDD)**. Every feature follows the same pattern: **Tests First → Implementation → Validation**, ensuring reliability through comprehensive test coverage before any code is written.
 
-**Philosophy:** Build from the data layer up. A working, tested API is the foundation for a reliable frontend.
+**Philosophy:** Write tests first. Tests define the contract and expected behavior, making implementation straightforward and reliable. This repository serves as an **LLM + TDD Experiment Lab**.
+
+## TDD Experiment Lab
+
+This repository is specifically designed to experiment with LLM-powered Test-Driven Development:
+
+- **Tests are written FIRST** based on feature specifications
+- **Backend and frontend tests** are created before any implementation
+- **Implementation follows** to make the tests pass
+- **LLMs generate** comprehensive test suites from Gherkin scenarios
+
+### Current Status: Tests Generated ✅
+
+**305+ tests have been generated** from the feature specifications:
+- ✅ Backend: 135 tests (Auth, Tasks, Workspaces)
+- ✅ Frontend: 170 tests (Components, Hooks, API clients)
+- ✅ Vitest fully configured
+- ⏳ Implementation: Ready to begin
+
+See `docs/TDD_TESTS_GENERATED.md` for complete details.
 
 ---
 
@@ -28,15 +47,202 @@ Each feature is documented in `docs/specs/features/[feature-name].md` with:
 
 ---
 
-## Standard Execution Order
+## Standard Execution Order (TDD Approach)
 
-### Phase 1: Backend Implementation
+### Phase 1: Write Tests FIRST
+
+**Why Tests First:**
+- Tests define the contract before implementation
+- Gherkin scenarios translate directly to test cases
+- Clear acceptance criteria from the start
+- Forces thinking about edge cases early
+- LLMs can generate comprehensive tests from specs
+- Implementation becomes straightforward (make tests pass)
+
+**Steps:**
+
+#### 1. Backend Tests (Write BEFORE Backend Implementation)
+**Location:** `backend/src/test/kotlin/com/todo/`
+
+**Test Structure:**
+```
+backend/src/test/kotlin/com/todo/
+├── resource/          # API endpoint tests (integration)
+│   ├── AuthResourceTest.kt
+│   ├── TaskResourceTest.kt
+│   └── WorkspaceResourceTest.kt
+├── service/           # Business logic tests (unit)
+│   ├── AuthServiceTest.kt
+│   ├── TaskServiceTest.kt
+│   └── WorkspaceServiceTest.kt
+└── repository/        # Data access tests
+    ├── UserRepositoryTest.kt
+    └── TaskRepositoryTest.kt
+```
+
+**Test Checklist:**
+- [ ] Write API endpoint tests (RestAssured + JUnit)
+- [ ] Write service layer tests (JUnit + Mockito)
+- [ ] Write repository tests if needed
+- [ ] Cover all Gherkin scenarios from feature spec
+- [ ] Test happy paths
+- [ ] Test error cases
+- [ ] Test edge cases
+- [ ] Test validation rules
+- [ ] Test authorization rules
+- [ ] **ALL TESTS SHOULD FAIL** (no implementation yet)
+
+**Example Backend Test:**
+```kotlin
+@QuarkusTest
+class AuthResourceTest {
+    @Test
+    fun `should register new user with valid email and password`() {
+        val request = RegisterRequest(
+            email = "test@example.com",
+            fullName = "Test User",
+            password = "SecurePass123!"
+        )
+        
+        given()
+            .contentType(ContentType.JSON)
+            .body(request)
+        .`when`()
+            .post("/api/auth/register")
+        .then()
+            .statusCode(201)
+            .body("user.email", equalTo("test@example.com"))
+            .body("user.isVerified", equalTo(false))
+            .body("token", notNullValue())
+    }
+    
+    @Test
+    fun `should reject registration with duplicate email`() {
+        // Test implementation
+    }
+    
+    @Test
+    fun `should reject registration with weak password`() {
+        // Test implementation
+    }
+}
+```
+
+#### 2. Frontend Tests (Write BEFORE Frontend Implementation)
+**Location:** `frontend/src/__tests__/`
+
+**Test Structure:**
+```
+frontend/src/__tests__/
+├── components/        # Component tests (React Testing Library)
+│   ├── auth/
+│   │   ├── RegisterForm.test.tsx
+│   │   └── LoginForm.test.tsx
+│   ├── tasks/
+│   │   ├── TaskList.test.tsx
+│   │   ├── TaskForm.test.tsx
+│   │   └── TaskCard.test.tsx
+│   └── workspaces/
+│       └── WorkspaceSelector.test.tsx
+├── pages/            # Page tests
+│   ├── auth/
+│   │   ├── signup.test.tsx
+│   │   └── login.test.tsx
+│   └── dashboard.test.tsx
+├── hooks/            # Custom hook tests
+│   ├── useAuth.test.ts
+│   └── useTasks.test.ts
+└── api/              # API client tests
+    ├── authApi.test.ts
+    └── taskApi.test.ts
+```
+
+**Test Checklist:**
+- [ ] Write component tests (React Testing Library + Vitest)
+- [ ] Write page tests
+- [ ] Write hook tests
+- [ ] Write API client tests
+- [ ] Cover all Gherkin scenarios from feature spec
+- [ ] Test user interactions
+- [ ] Test form validation
+- [ ] Test error states
+- [ ] Test loading states
+- [ ] Test accessibility
+- [ ] **ALL TESTS SHOULD FAIL** (no implementation yet)
+
+**Example Frontend Test:**
+```typescript
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { RegisterForm } from '@/components/auth/RegisterForm';
+
+describe('RegisterForm', () => {
+  it('should register user with valid email, name, and password', async () => {
+    const mockRegister = vi.fn();
+    
+    render(<RegisterForm onRegister={mockRegister} />);
+    
+    fireEvent.change(screen.getByLabelText('Email'), {
+      target: { value: 'test@example.com' }
+    });
+    fireEvent.change(screen.getByLabelText('Full Name'), {
+      target: { value: 'Test User' }
+    });
+    fireEvent.change(screen.getByLabelText('Password'), {
+      target: { value: 'SecurePass123!' }
+    });
+    
+    fireEvent.click(screen.getByText('Sign Up'));
+    
+    await waitFor(() => {
+      expect(mockRegister).toHaveBeenCalledWith({
+        email: 'test@example.com',
+        fullName: 'Test User',
+        password: 'SecurePass123!'
+      });
+    });
+  });
+  
+  it('should show error for invalid email format', async () => {
+    // Test implementation
+  });
+  
+  it('should show error for weak password', async () => {
+    // Test implementation
+  });
+});
+```
+
+#### 3. Verify All Tests Fail
+**Before any implementation:**
+```bash
+# Backend tests should fail
+cd backend
+./gradlew test  # Should fail - no implementation yet
+
+# Frontend tests should fail
+cd frontend
+npm test        # Should fail - no implementation yet
+```
+
+This confirms tests are valid and will catch missing implementation.
+
+---
+
+### Phase 2: Backend Implementation
 
 **Why Backend First:**
 - Data model drives everything
 - API contract defines frontend requirements
 - Backend can be tested independently
 - Frontend development is faster with working API
+
+**Before Starting Implementation:**
+1. **Review the test files** for the feature you're implementing
+2. Read through all test cases to understand requirements
+3. Use tests as your specification - they define exact behavior
+4. Note edge cases and error scenarios covered in tests
+5. Reference the Gherkin scenarios in the feature spec
 
 **Steps:**
 
@@ -190,142 +396,26 @@ class AuthResource(
 
 ---
 
-### Phase 2: Backend Testing
-
-**Why Test Before Frontend:**
-- Catch bugs early
-- Document expected behavior
-- Ensure API reliability
-- Faster iteration (no UI needed)
-
-**Testing Approach:**
-
-#### 1. Unit Tests (Services, Utilities)
-**Tool:** JUnit 5 + Mockito
-
-**Location:** `backend/src/test/kotlin/com/todo/service/`
-
-**Test:**
-- [ ] Service methods with valid input
-- [ ] Service methods with invalid input
-- [ ] Error handling
-- [ ] Edge cases
-
-**Example:**
-```kotlin
-@QuarkusTest
-class AuthServiceTest {
-    @Inject
-    lateinit var authService: AuthService
-    
-    @Test
-    fun `should create user with hashed password`() {
-        val result = authService.register(
-            RegisterRequest(
-                email = "test@example.com",
-                fullName = "Test User",
-                password = "Password123"
-            )
-        )
-        
-        assertEquals("test@example.com", result.user.email)
-        assertNotEquals("Password123", result.user.passwordHash)
-    }
-    
-    @Test
-    fun `should reject duplicate email`() {
-        assertThrows<AppException.Conflict> {
-            authService.register(
-                RegisterRequest(
-                    email = "existing@example.com",
-                    fullName = "Test",
-                    password = "Password123"
-                )
-            )
-        }
-    }
-}
-```
-
-#### 2. Integration Tests (API Endpoints)
-**Tool:** RestAssured + JUnit 5
-
-**Location:** `backend/src/test/kotlin/com/todo/resource/`
-
-**Test:**
-- [ ] Each endpoint with valid requests
-- [ ] Each endpoint with invalid requests
-- [ ] Authentication/authorization
-- [ ] Error responses
-- [ ] Status codes
-
-**Example:**
-```kotlin
-@QuarkusTest
-class AuthResourceTest {
-    @Test
-    fun `should register new user`() {
-        val request = RegisterRequest(
-            email = "new@example.com",
-            fullName = "New User",
-            password = "Password123"
-        )
-        
-        given()
-            .contentType(ContentType.JSON)
-            .body(request)
-        .`when`()
-            .post("/api/auth/register")
-        .then()
-            .statusCode(201)
-            .body("user.email", equalTo("new@example.com"))
-    }
-    
-    @Test
-    fun `should reject invalid email`() {
-        val request = RegisterRequest(
-            email = "invalid",
-            fullName = "Test",
-            password = "Password123"
-        )
-        
-        given()
-            .contentType(ContentType.JSON)
-            .body(request)
-        .`when`()
-            .post("/api/auth/register")
-        .then()
-            .statusCode(400)
-  });
-});
-```
-
-#### 3. Manual Testing (API Client)
-**Tool:** Postman, Insomnia, or curl
-
-**Test:**
-- [ ] Happy paths for each endpoint
-- [ ] Error scenarios
-- [ ] Edge cases
-- [ ] Performance (response times)
-
-#### 4. Run Tests in CI/CD
-**Before Merging:**
-```bash
-npm run test              # Run all tests
-npm run test:coverage     # Check coverage (>80%)
-npm run lint              # Check code quality
-```
-
----
-
 ### Phase 3: Frontend Implementation
 
-**Why Frontend Last:**
-- API contract is stable
-- Backend is tested and working
-- Frontend can focus on UX
-- No waiting for backend changes
+**Now that backend is working and tests pass:**
+- Frontend implementation becomes straightforward
+- API contract is stable and tested
+- Frontend tests provide clear acceptance criteria
+- Focus on UX and making frontend tests pass
+
+**Before Starting Implementation:**
+1. **Review the frontend test files** for the feature you're implementing
+2. Read through component, hook, and API client tests
+3. Understand expected user interactions from tests
+4. Note form validation rules, error states, loading states
+5. Check accessibility requirements in tests
+6. Reference the Gherkin scenarios and UI specs
+
+**Implementation Goals:**
+- Make all frontend tests pass
+- Follow the test specifications exactly
+- Implement UI/UX based on test requirements
 
 **Steps:**
 
@@ -430,40 +520,86 @@ export const RegisterForm: React.FC = () => {
 - [ ] Add protected routes
 - [ ] Handle redirects
 
-#### 8. Testing & Polish
-**Checklist:**
-- [ ] Manual testing of all flows
+#### 8. Verify All Frontend Tests Pass
+**Run tests to confirm:**
+```bash
+cd frontend
+npm test        # All tests should pass now
+npm run test:coverage  # Check coverage >80%
+```
+
+---
+
+### Phase 4: Final Validation & Polish
+
+**Manual Testing:**
+- [ ] Test all Gherkin scenarios manually
 - [ ] Accessibility audit (keyboard, screen reader)
 - [ ] Responsive design check
 - [ ] Error state handling
 - [ ] Loading state handling
+- [ ] Performance check
+
+**Quality Gates:**
+- [ ] All backend tests passing
+- [ ] All frontend tests passing
+- [ ] Backend coverage >80%
+- [ ] Frontend coverage >80%
+- [ ] No linter errors
+- [ ] All Gherkin scenarios work
 
 ---
 
-## Implementation Checklist Template
+## Implementation Checklist Template (TDD)
 
 Copy this for each feature:
 
 ```markdown
 ## Feature: [Feature Name]
 
-### Phase 1: Backend
+### Phase 1: Write Tests FIRST (TDD)
+
+#### Backend Tests
+- [ ] API endpoint tests written (RestAssured)
+- [ ] Service layer tests written (JUnit)
+- [ ] Repository tests written (if needed)
+- [ ] All Gherkin scenarios covered
+- [ ] Happy paths tested
+- [ ] Error cases tested
+- [ ] Edge cases tested
+- [ ] Validation rules tested
+- [ ] Authorization rules tested
+- [ ] **Verified all tests FAIL** (no implementation)
+
+#### Frontend Tests
+- [ ] Component tests written (React Testing Library)
+- [ ] Page tests written
+- [ ] Hook tests written
+- [ ] API client tests written
+- [ ] All Gherkin scenarios covered
+- [ ] User interactions tested
+- [ ] Form validation tested
+- [ ] Error states tested
+- [ ] Loading states tested
+- [ ] Accessibility tested
+- [ ] **Verified all tests FAIL** (no implementation)
+
+### Phase 2: Backend Implementation
+- [ ] **Reviewed backend test files** (AuthServiceTest.kt, etc.)
+- [ ] Read through all test cases to understand requirements
 - [ ] Database migration created and applied
-- [ ] TypeScript types defined
+- [ ] Domain entities defined
+- [ ] DTOs defined
 - [ ] Repository layer implemented
 - [ ] Service layer implemented
-- [ ] Middleware implemented (if needed)
-- [ ] Controllers implemented
-- [ ] Routes registered
+- [ ] REST resources implemented
+- [ ] Exception handling implemented
+- [ ] **All backend tests PASS**
 - [ ] Backend linted and formatted
 
-### Phase 2: Backend Tests
-- [ ] Unit tests for services (>80% coverage)
-- [ ] Integration tests for API endpoints
-- [ ] Manual API testing completed
-- [ ] All tests passing in CI
-
-### Phase 3: Frontend
+### Phase 3: Frontend Implementation
+- [ ] **Reviewed frontend test files** (components, hooks, API tests)
+- [ ] Read through test cases to understand user interactions
 - [ ] API client implemented
 - [ ] Context/state management setup
 - [ ] Atoms created/reused
@@ -471,50 +607,58 @@ Copy this for each feature:
 - [ ] Organisms implemented
 - [ ] Pages created
 - [ ] Routes configured
+- [ ] **All frontend tests PASS**
 - [ ] Frontend linted and formatted
 
-### Phase 4: End-to-End Testing
-- [ ] All user scenarios tested manually
+### Phase 4: Final Validation
+- [ ] All Gherkin scenarios tested manually
 - [ ] Accessibility verified
 - [ ] Responsive design verified
 - [ ] Error handling verified
 - [ ] Performance acceptable
+- [ ] Code coverage >80% (backend + frontend)
 
 ### Phase 5: Documentation
 - [ ] API documentation updated
 - [ ] Component documentation added
+- [ ] Test documentation added
 - [ ] README updated (if needed)
-- [ ] Deployment notes added (if needed)
 ```
 
 ---
 
 ## Git Workflow
 
-### Branch Strategy
+### Branch Strategy (TDD)
 
 ```bash
 # Feature branch from main
 git checkout -b feature/[feature-name]
 
-# Backend implementation
+# PHASE 1: Write tests first
+git commit -m "test(backend): add [feature] tests (TDD)"
+git commit -m "test(frontend): add [feature] tests (TDD)"
+
+# PHASE 2: Backend implementation (make tests pass)
 git commit -m "feat(backend): implement [feature] database schema"
 git commit -m "feat(backend): implement [feature] API endpoints"
-git commit -m "test(backend): add [feature] tests"
+git commit -m "feat(backend): make all backend tests pass"
 
-# Frontend implementation
+# PHASE 3: Frontend implementation (make tests pass)
 git commit -m "feat(frontend): implement [feature] UI components"
 git commit -m "feat(frontend): connect [feature] to API"
+git commit -m "feat(frontend): make all frontend tests pass"
 
 # Push and create PR
 git push origin feature/[feature-name]
 ```
 
-### Commit Message Convention
+### Commit Message Convention (TDD)
 
-- `feat(backend):` - Backend features
-- `feat(frontend):` - Frontend features
-- `test:` - Tests
+- `test(backend):` - Backend tests (write first!)
+- `test(frontend):` - Frontend tests (write first!)
+- `feat(backend):` - Backend implementation
+- `feat(frontend):` - Frontend implementation
 - `fix:` - Bug fixes
 - `docs:` - Documentation
 - `refactor:` - Code refactoring
@@ -525,25 +669,35 @@ git push origin feature/[feature-name]
 
 ## Quality Gates
 
-### Before Moving to Next Phase
+### Before Moving to Next Phase (TDD)
 
-**Backend → Testing:**
-- [ ] All files linted and formatted
-- [ ] No TypeScript errors
-- [ ] Manual API testing completed
-- [ ] Code reviewed
+**Phase 1 (Tests) → Phase 2 (Backend):**
+- [ ] All backend tests written
+- [ ] All frontend tests written
+- [ ] Tests cover all Gherkin scenarios
+- [ ] Tests verified to FAIL (no implementation)
+- [ ] Tests reviewed for completeness
 
-**Testing → Frontend:**
+**Phase 2 (Backend) → Phase 3 (Frontend):**
 - [ ] All backend tests passing
+- [ ] Backend linted and formatted
 - [ ] Code coverage >80%
 - [ ] No critical bugs
 - [ ] API contract stable
 
-**Frontend → Deployment:**
+**Phase 3 (Frontend) → Phase 4 (Validation):**
 - [ ] All frontend tests passing
+- [ ] Frontend linted and formatted
+- [ ] Code coverage >80%
+- [ ] No critical bugs
+- [ ] All components working
+
+**Phase 4 (Validation) → Deployment:**
+- [ ] All manual tests passed
 - [ ] Accessibility audit passed
 - [ ] Responsive design verified
 - [ ] Performance acceptable
+- [ ] All Gherkin scenarios work
 
 ---
 
@@ -599,7 +753,7 @@ npm run format
 
 ---
 
-## Feature Development Workflow Example
+## Feature Development Workflow Example (TDD)
 
 ### Example: Authentication Feature
 
@@ -611,21 +765,38 @@ npm run format
    - `backend-architecture.md`
    - `frontend-auth.md`
 
-3. **Backend Implementation (Week 1):**
-   - Day 1: Database schema + types
-   - Day 2: Repositories + services
-   - Day 3: Controllers + routes
-   - Day 4: Unit tests
-   - Day 5: Integration tests + manual testing
+3. **Phase 1: Write All Tests FIRST (Days 1-2):**
+   - Day 1: Write backend tests
+     - AuthResourceTest.kt (API endpoints)
+     - AuthServiceTest.kt (business logic)
+     - UserRepositoryTest.kt (data access)
+     - Cover all Gherkin scenarios
+     - **Verify all tests FAIL**
+   - Day 2: Write frontend tests
+     - RegisterForm.test.tsx
+     - LoginForm.test.tsx
+     - useAuth.test.ts (hook)
+     - authApi.test.ts (API client)
+     - Cover all Gherkin scenarios
+     - **Verify all tests FAIL**
 
-4. **Frontend Implementation (Week 2):**
-   - Day 1: API client + context
-   - Day 2: Atoms + molecules
-   - Day 3: Organisms (forms)
-   - Day 4: Pages + routing
-   - Day 5: Testing + polish
+4. **Phase 2: Backend Implementation (Days 3-5):**
+   - Day 3: Database + entities + DTOs
+   - Day 4: Repositories + services
+   - Day 5: REST resources + make all tests pass
 
-5. **Review & Deploy:**
+5. **Phase 3: Frontend Implementation (Days 6-8):**
+   - Day 6: API client + context
+   - Day 7: Components (RegisterForm, LoginForm)
+   - Day 8: Pages + routing + make all tests pass
+
+6. **Phase 4: Validation (Day 9):**
+   - Manual testing of all Gherkin scenarios
+   - Accessibility audit
+   - Performance check
+   - Polish & bug fixes
+
+7. **Review & Deploy (Day 10):**
    - Code review
    - QA testing
    - Deploy to staging
@@ -634,32 +805,36 @@ npm run format
 
 ---
 
-## Benefits of This Approach
+## Benefits of TDD Approach
 
-1. **Reduced Rework:** Backend API is stable before frontend starts
-2. **Parallel Development:** Backend and frontend can be different people (after Phase 1)
-3. **Better Testing:** Backend thoroughly tested independently
-4. **Faster Frontend:** No waiting for backend changes
-5. **Clear Dependencies:** Each phase builds on previous
-6. **Quality Assurance:** Multiple testing phases catch bugs early
+1. **Clear Requirements:** Tests define exact behavior before coding
+2. **Better Design:** Writing tests first forces good API design
+3. **Fewer Bugs:** Tests catch issues before implementation
+4. **Confidence:** Green tests = working feature
+5. **Documentation:** Tests serve as executable documentation
+6. **Refactoring Safety:** Tests ensure behavior doesn't break
+7. **LLM-Friendly:** Gherkin → Tests is perfect for LLM generation
+8. **Faster Development:** Clear goals, less debugging
 
 ---
 
-## Anti-Patterns to Avoid
+## Anti-Patterns to Avoid (TDD)
 
 ❌ **Don't:**
-- Build frontend before backend API is working
+- Write implementation before tests
 - Skip tests ("we'll add them later")
-- Mix backend and frontend in same commits
-- Start new features before completing current
-- Skip code review
+- Write tests after implementation
+- Write tests that pass immediately (no value)
+- Skip the "verify tests fail" step
+- Mix test writing and implementation in same commits
 
 ✅ **Do:**
-- Complete one phase before starting next
-- Write tests as you go
-- Keep commits focused and atomic
-- Review specs before implementing
-- Ask for clarification on unclear requirements
+- Write tests FIRST, always
+- Verify tests fail before implementing
+- Make tests pass with minimal implementation
+- Keep test commits separate from implementation commits
+- Review Gherkin scenarios before writing tests
+- Use tests as your specification
 
 ---
 

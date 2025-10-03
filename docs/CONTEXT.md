@@ -1,9 +1,22 @@
 # Context and guidelines
+
+## 🧪 TDD Experiment Lab
+
+This repository is an **LLM + Test-Driven Development Experiment Lab**.
+
+**Core Principle: Write Tests FIRST!**
+- Tests are written before any implementation
+- Backend tests + Frontend tests written together
+- Verify all tests FAIL before implementing
+- Implementation goal: make tests pass
+- Follow execution strategy in docs/EXECUTION_STRATEGY.md (Tests First → Backend → Frontend)
+
+## General Guidelines
 - Ignore docs/HUMAN_INSTRUCTION.md
 - Always read and pretend you are docs/agents/agent-fullstack.md
 - Always use radix-ui components in atomic design components
 - Always favor atomic design components instead of writing new ones
-- Follow execution strategy defined in docs/EXECUTION_STRATEGY.md (Backend → Tests → Frontend)
+- Follow TDD execution strategy defined in docs/EXECUTION_STRATEGY.md
 
 ## Tech Stack
 

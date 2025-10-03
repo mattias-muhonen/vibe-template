@@ -2,6 +2,17 @@
 
 A collaborative, web-based Todo application built with modern technologies.
 
+## 🧪 TDD Experiment Lab
+
+This repository serves as an **LLM + Test-Driven Development (TDD) Experiment Lab**. The core principle: **Write tests FIRST, then implement**.
+
+**Key Philosophy:**
+- 📝 Tests are written before any implementation
+- 🎯 Gherkin scenarios → Test suites → Implementation
+- ✅ All tests must fail initially (no implementation)
+- 🚀 Implementation goal: make tests pass
+- 🤖 LLMs generate comprehensive test suites from specifications
+
 ## Tech Stack
 
 ### Backend
@@ -73,27 +84,33 @@ Frontend runs at: `http://localhost:3000`
 - **[Frontend Architecture](docs/specs/frontend-auth.md)** - Next.js frontend patterns
 - **[Database Schema](docs/specs/database-schema-auth.md)** - PostgreSQL schema design
 
-## Development Workflow
+## Development Workflow (TDD)
 
-We follow a **Backend → Tests → Frontend** approach for feature development:
+We follow a **Tests First → Backend → Frontend** approach using Test-Driven Development:
 
-### Phase 1: Backend Implementation
-1. Database schema (Flyway migrations)
-2. Domain entities (JPA/Hibernate)
-3. Repositories (Panache)
-4. Services (Business logic)
-5. REST Resources (Controllers)
+### Phase 1: Write Tests FIRST ⚠️
+1. Write backend tests (API, services, repositories)
+2. Write frontend tests (components, pages, hooks)
+3. **Verify all tests FAIL** (no implementation yet)
 
-### Phase 2: Backend Testing
-6. Unit tests (services)
-7. Integration tests (REST endpoints)
+### Phase 2: Backend Implementation
+4. Database schema (Flyway migrations)
+5. Domain entities + DTOs
+6. Repositories + Services
+7. REST Resources
+8. **Make all backend tests PASS** ✅
 
 ### Phase 3: Frontend Implementation
-8. UI components
-9. API client
-10. Pages and routing
+9. API client + hooks
+10. UI components
+11. Pages and routing
+12. **Make all frontend tests PASS** ✅
 
-See `docs/EXECUTION_STRATEGY.md` for detailed workflow.
+### Phase 4: Validation
+13. Manual testing of all scenarios
+14. Accessibility + performance audit
+
+See `docs/EXECUTION_STRATEGY.md` for detailed TDD workflow.
 
 ## Features
 
@@ -134,20 +151,41 @@ NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
 
 ## Current Status
 
-**Phase:** Initial Setup  
-**Status:** Minimal working stub with "Hello World" API call
+**Phase:** TDD Experiment Lab - Tests Generated ✅  
+**Status:** 305+ tests created, ready for implementation
 
 ### Working
 - ✅ Backend stub (Quarkus + Kotlin)
 - ✅ Frontend stub (Next.js + TypeScript)
 - ✅ Backend → Frontend communication
 - ✅ Complete technical specifications
+- ✅ Complete feature specifications (Gherkin scenarios)
+- ✅ TDD workflow documented
+- ✅ **305+ tests generated** (135 backend, 170 frontend)
+- ✅ **Vitest configured** and ready
 
-### Next Steps
-1. Implement authentication backend (following `docs/specs/backend-architecture.md`)
-2. Write backend tests
-3. Implement authentication frontend (following `docs/specs/frontend-auth.md`)
-4. Move on to next features (Task Management, Workspaces, etc.)
+### Tests Generated
+- ✅ Backend: AuthResourceTest, AuthServiceTest, TaskResourceTest, WorkspaceResourceTest
+- ✅ Frontend: Auth components, Task components, Workspace components, Filters, Notifications
+- ✅ All tests currently FAIL (no implementation) - Perfect for TDD!
+
+See `README_TESTS.md` and `docs/TDD_TESTS_GENERATED.md` for details.
+
+### Next Steps (TDD Approach)
+1. **Run tests to verify they fail** ✅
+   ```bash
+   cd backend && ./gradlew test
+   cd frontend && npm test
+   ```
+2. **Start implementing features:**
+   - Implement authentication backend/frontend
+   - Watch tests turn green ✅
+3. **Continue with other features:**
+   - Task Management
+   - Workspace Management
+   - Real-Time Collaboration
+   - Notifications
+   - Filtering & Sorting
 
 ## Contributing
 
