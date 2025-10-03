@@ -22,6 +22,20 @@ dependencies {
     implementation("io.quarkus:quarkus-resteasy-reactive-jackson")
     implementation("io.quarkus:quarkus-arc")
     
+    // Database
+    implementation("io.quarkus:quarkus-hibernate-orm-panache-kotlin")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
+    implementation("io.quarkus:quarkus-flyway")
+    
+    // Security & Authentication
+    implementation("io.quarkus:quarkus-security")
+    implementation("io.quarkus:quarkus-smallrye-jwt")
+    implementation("io.quarkus:quarkus-smallrye-jwt-build")
+    implementation("at.favre.lib:bcrypt:0.10.2")
+    
+    // Validation
+    implementation("io.quarkus:quarkus-hibernate-validator")
+    
     // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     
