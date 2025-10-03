@@ -1,4 +1,5 @@
 # Multi-User Todo Application
+## Product Requirements Document
 
 ### TL;DR
 
@@ -6,193 +7,219 @@ A collaborative, web-based Todo application designed for teams and groups to man
 
 ---
 
+## Product Vision
+
+**Mission:** Eliminate task confusion in distributed teams by providing clear, real-time visibility into who is doing what.
+
+**Target Users:**
+- Small to medium teams (5-50 people)
+- Remote/distributed teams
+- Project managers and team leads
+- Marketing, development, operations teams
+
+**Core Value Proposition:**
+- **Clarity:** Every task has clear ownership
+- **Speed:** Real-time updates, no refresh needed
+- **Simplicity:** 3-minute onboarding, intuitive interface
+- **Reliability:** 99.9% uptime, data always in sync
+
+---
+
 ## Goals
 
 ### Business Goals
 
-* Achieve 1,000 active users within the first quarter post-launch.
-
-* Secure at least three organizational partnerships for pilot use within six months.
-
-* Maintain 90% user retention rate after the onboarding experience.
-
-* Reduce average onboarding time to under 3 minutes.
+* Achieve **1,000 active users** within the first quarter post-launch
+* Secure at least **three organizational partnerships** for pilot use within six months
+* Maintain **90% user retention rate** after the onboarding experience
+* Reduce average onboarding time to **under 3 minutes**
 
 ### User Goals
 
-* Easily create, assign, and track tasks with minimal setup.
-
-* Collaborate in real-time with team members in a shared workspace.
-
-* Quickly filter and view tasks by assignee, due date, or status.
-
-* Receive notifications for assigned, completed, or overdue tasks.
-
-* Access the platform from any modern web browser with responsive design.
+* Easily create, assign, and track tasks with minimal setup
+* Collaborate in real-time with team members in a shared workspace
+* Quickly filter and view tasks by assignee, due date, or status
+* Receive notifications for assigned, completed, or overdue tasks
+* Access the platform from any modern web browser with responsive design
 
 ### Non-Goals
 
-* No dedicated native mobile applications in the initial release.
-
-* Advanced analytics or reporting dashboards beyond basic task status.
-
-* Integration with complex enterprise software (e.g., ERP, HRMS) at launch.
+* No dedicated native mobile applications in the initial release
+* Advanced analytics or reporting dashboards beyond basic task status
+* Integration with complex enterprise software (e.g., ERP, HRMS) at launch
 
 ---
 
-## User Stories
+## User Personas
 
-### User Personas & Stories
+### Team Member (Primary Persona)
 
-**Team Member**
+**Sarah, Marketing Coordinator**
+- Needs: See her assigned tasks, mark them complete, ask questions
+- Pain: Tasks get lost in email, unclear what she should work on
+- Frequency: Daily user, checks multiple times per day
 
-* As a Team Member, I want to view all tasks assigned to me, so that I can prioritize my daily workload.
+**User Stories:**
+- As a Team Member, I want to view all tasks assigned to me, so that I can prioritize my daily workload
+- As a Team Member, I want to comment on tasks, so that I can clarify requirements or ask questions
+- As a Team Member, I want to mark tasks as complete, so that I keep the team updated on progress
 
-* As a Team Member, I want to comment on tasks, so that I can clarify requirements or ask questions.
+### Team Lead (Secondary Persona)
 
-* As a Team Member, I want to mark tasks as complete, so that I keep the team updated on progress.
+**Mike, Project Manager**
+- Needs: Create tasks, assign to team, track progress, identify blockers
+- Pain: Doesn't know who's working on what, deadlines slip
+- Frequency: Daily user, creates 10-20 tasks per week
 
-**Team Lead**
+**User Stories:**
+- As a Team Lead, I want to assign tasks to individual team members, so that responsibilities are clear
+- As a Team Lead, I want to see overdue tasks across the team, so that I can address bottlenecks quickly
+- As a Team Lead, I want to create recurring tasks, so that regular duties are not overlooked
 
-* As a Team Lead, I want to assign tasks to individual team members, so that responsibilities are clear.
+### Admin (Tertiary Persona)
 
-* As a Team Lead, I want to see overdue tasks across the team, so that I can address bottlenecks quickly.
+**Alex, Operations Manager**
+- Needs: Manage workspace access, set permissions
+- Pain: Security concerns, need to control who sees what
+- Frequency: Weekly user, mainly for setup and maintenance
 
-* As a Team Lead, I want to create recurring tasks, so that regular duties are not overlooked.
-
-**Admin**
-
-* As an Admin, I want to add or remove users from the team workspace, so that access stays secure and relevant.
-
-* As an Admin, I want to update permissions, so that sensitive tasks can be shared only with authorized users.
+**User Stories:**
+- As an Admin, I want to add or remove users from the team workspace, so that access stays secure and relevant
+- As an Admin, I want to update permissions, so that sensitive tasks can be shared only with authorized users
 
 ---
 
-## Functional Requirements
+## Features
 
-* **Core Task Management** (Priority: High)
+The application is built around 6 core features, prioritized for MVP launch:
 
-  * Task Creation: Provide an interface to add new todo items with title, description, due date, and priority.
+### 1. **User Authentication** (Priority: Critical - Foundation)
+**Status:** Specs complete  
+**Spec:** `docs/specs/features/authentication.md`
 
-  * Assign Tasks: Allow assigning tasks to one or more users from the workspace.
+Secure multi-user authentication with Google OAuth and email/password. Email verification for security. JWT-based sessions.
 
-  * Task Editing: Enable users to update task details, reassign, or change deadlines.
+**Key Capabilities:**
+- Registration with email verification
+- Google OAuth sign-in
+- Secure session management
+- Protected routes
 
-  * Mark Complete: Simple action to complete or re-open tasks.
+---
 
-* **Collaboration Features** (Priority: High)
+### 2. **Core Task Management** (Priority: High - Core MVP)
+**Status:** Needs specs  
+**Spec:** `docs/specs/features/task-management.md`
 
-  * Real-Time Updates: Instant updates for new or changed tasks across all team members.
+Complete task lifecycle from creation to completion. CRUD operations, task assignment, status tracking.
 
-  * Comments & Discussion: Inline commenting on tasks for communication.
+**Key Capabilities:**
+- Create, edit, delete tasks
+- Assign tasks to one or more users
+- Set priority, due date, description
+- Mark complete/reopen
+- Task ownership tracking
 
-* **Notifications & Activity Feed** (Priority: Medium)
+---
 
-  * In-app and email notifications for assignments, completions, or edits.
+### 3. **Workspace Management** (Priority: High - Core MVP)
+**Status:** Needs specs  
+**Spec:** `docs/specs/features/workspace-management.md`
 
-  * Activity feed for workspace-level changes (new tasks, completion, assignments).
+Multi-user workspaces with role-based permissions. Invite members, manage access, workspace isolation.
 
-* **User & Workspace Management** (Priority: Medium)
+**Key Capabilities:**
+- Create/manage workspaces
+- Invite members by email
+- Role-based access (Admin, Member)
+- Workspace switching
+- Member management
 
-  * Multi-user login and authentication.
+---
 
-  * Invite users to workspace by email.
+### 4. **Real-Time Collaboration** (Priority: High - Differentiator)
+**Status:** Needs specs  
+**Spec:** `docs/specs/features/real-time-collaboration.md`
 
-  * Role/permission management (Admin, Regular Member).
+WebSocket-based instant synchronization across all connected users. No refresh needed.
 
-* **Filtering & Sorting** (Priority: Medium)
+**Key Capabilities:**
+- Instant task updates
+- Live presence indicators
+- Conflict detection
+- Offline support with sync
 
-  * Filter tasks by assignee, status, due date, or priority.
+---
 
-  * Sort tasks by date, priority, or creation time.
+### 5. **Notifications & Activity Feed** (Priority: Medium)
+**Status:** Needs specs  
+**Spec:** `docs/specs/features/notifications.md`
 
-* **UX Enhancements** (Priority: Low)
+Keep users informed via in-app and email notifications. Activity feed for workspace history.
 
-  * Responsive web design optimized for both desktop and mobile browsers.
+**Key Capabilities:**
+- Task assignment notifications
+- Completion notifications
+- Comment notifications
+- Activity timeline
+- Email digests
+- Notification preferences
 
-  * Accessibility support for screen readers and keyboard navigation.
+---
+
+### 6. **Task Filtering & Sorting** (Priority: Medium)
+**Status:** Needs specs  
+**Spec:** `docs/specs/features/task-filters-sorting.md`
+
+Find tasks quickly with powerful filters and sorting options.
+
+**Key Capabilities:**
+- Filter by assignee, status, priority, due date
+- Combine multiple filters
+- Sort by date, priority, title
+- Save filter presets
+- URL-based filter sharing
 
 ---
 
 ## User Experience
 
-**Entry Point & First-Time User Experience**
+### Entry Point & First-Time User Experience
 
-* Users discover the app via a direct link, invite, or company portal.
+* Users discover the app via a direct link, invite, or company portal
+* Landing page offers simple login/signup (Google SSO and email/password)
+* First-time users are greeted with a guided onboarding: a short tooltip tour highlighting the workspace, task creation, and assignment features
+* Initial workspace setup (name, invite users) is prompted, but can be skipped or visited later
 
-* Landing page offers simple login/signup (Google SSO and email/password).
+### Core User Flow
 
-* First-time users are greeted with a guided onboarding: a short tooltip tour highlighting the workspace, task creation, and assignment features.
+1. **Login** → User authenticates (Google or email/password)
+2. **Dashboard** → See tasks assigned to them, prominent "Add Task" button
+3. **Create Task** → Simple form: title, description, due date, priority, assignee(s)
+4. **Task Appears Instantly** → Real-time sync to all workspace members
+5. **Collaborate** → Comment, reassign, update status
+6. **Complete** → Mark done, notify creator
+7. **Filter/Sort** → Find specific tasks quickly
 
-* Initial workspace setup (name, invite users) is prompted, but can be skipped or visited later.
+### UI/UX Principles
 
-**Core Experience**
-
-* **Step 1:** User logs in and lands on their personal dashboard, displaying all tasks assigned to them and tasks they’ve created.
-
-  * Clean, uncluttered UI with a prominent "Add Task" button.
-
-  * Immediate error messaging for invalid logins or session issues.
-
-  * Success: User sees their workspace populated accordingly.
-
-* **Step 2:** User creates a new task from the dashboard.
-
-  * Modal or inline form appears: title, description, due date, priority, and assignee(s).
-
-  * Input validation (required fields, date formats).
-
-  * Upon creation, the task appears instantly in the relevant workspace views.
-
-* **Step 3:** User assigns task(s) to one or more team members.
-
-  * Autocomplete/select users from workspace roster.
-
-  * Task creator is notified on successful assignment.
-
-  * Assigned users receive in-app and email notification.
-
-* **Step 4:** Team members comment, mark as complete, or reassign as needed.
-
-  * Inline comment threads under each task.
-
-  * Instant visual feedback on status changes.
-
-* **Step 5:** Tasks are updated or filtered based on user preferences (status, assignee).
-
-  * Filters are accessible in a sidebar or dropdown.
-
-  * Any changes sync in real time across user sessions.
-
-**Advanced Features & Edge Cases**
-
-* Users can attach simple files or links to tasks (future phase).
-
-* Error handling for unreachable users (e.g., email invite not accepted).
-
-* Graceful handling of deleted users/tasks.
-
-* Escalation for overdue, high priority, or blocked tasks.
-
-**UI/UX Highlights**
-
-* High-contrast color scheme and large clickable areas for accessibility.
-
-* Intuitive drag-and-drop task reordering for power users.
-
-* Responsive design ensures usability on desktops, tablets, and phones.
-
-* Keyboard shortcuts for rapid users; ARIA labels for assistive tech users.
+* **Minimalist:** Clean, uncluttered interface
+* **Accessible:** WCAG AA compliance, keyboard navigation, screen reader support
+* **Responsive:** Works on desktop, tablet, mobile browsers
+* **Fast:** Sub-second response times, optimistic UI updates
+* **Intuitive:** No manual needed, self-explanatory interface
 
 ---
 
-## Narrative
+## User Narrative
 
-Sarah leads a remote marketing team scattered across three time zones. Previously, they struggled to keep track of responsibilities—tasks were lost in email threads, and deadlines were missed when ownership was unclear. With the Multi-User Todo Application, Sarah quickly sets up a team workspace and invites everyone to join. She can easily create tasks, assign them to specific team members, and clarify priorities directly in the app.
+Sarah leads a remote marketing team scattered across three time zones. Previously, they struggled to keep track of responsibilities—tasks were lost in email threads, and deadlines were missed when ownership was unclear.
+
+With the Multi-User Todo Application, Sarah quickly sets up a team workspace and invites everyone to join. She can easily create tasks, assign them to specific team members, and clarify priorities directly in the app.
 
 As each team member logs in, they see only the tasks relevant to them, can comment to request clarifications, and mark work complete when finished. Real-time notifications ensure everyone stays aligned, while overdue or at-risk tasks are surfaced to Sarah for quick action.
 
-The result? Sarah’s team collaborates far more effectively: accountability is clear, no task slips through the cracks, and the team has more time to focus on creative work—instead of chasing status updates. The business sees improved project turnaround and higher team morale.
+**The result?** Sarah's team collaborates far more effectively: accountability is clear, no task slips through the cracks, and the team has more time to focus on creative work—instead of chasing status updates. The business sees improved project turnaround and higher team morale.
 
 ---
 
@@ -200,172 +227,206 @@ The result? Sarah’s team collaborates far more effectively: accountability is 
 
 ### User-Centric Metrics
 
-* % of users assigning at least one task per week
-
-* Net Promoter Score (NPS) via in-app feedback
-
-* Average first session duration
-
-* Task completion rate
+* **Engagement:** % of users assigning at least one task per week
+* **Satisfaction:** Net Promoter Score (NPS) via in-app feedback (target: > 8)
+* **Onboarding:** Average first session duration (target: > 5 minutes)
+* **Productivity:** Task completion rate (target: > 70%)
 
 ### Business Metrics
 
-* Number of paid/enterprise signups (post-launch)
-
-* Churn rate
-
-* Number of workspace upgrades (if monetized)
-
-* Cost per workspace activation
+* **Growth:** Number of paid/enterprise signups (post-launch)
+* **Retention:** Churn rate (target: < 10% monthly)
+* **Monetization:** Number of workspace upgrades (if monetized)
+* **Acquisition:** Cost per workspace activation
 
 ### Technical Metrics
 
-* App uptime (target 99.9%+ monthly)
-
-* API average response time (<200ms)
-
-* Sync latency across users
-
-* Critical bug rate
+* **Reliability:** App uptime (target: 99.9%+ monthly)
+* **Performance:** API average response time (target: < 200ms)
+* **Real-Time:** Sync latency across users (target: < 500ms)
+* **Quality:** Critical bug rate (target: < 0.1% of sessions)
 
 ### Tracking Plan
 
 * User signup, login, and session events
-
 * Task creation, completion, reopening
-
 * Task assignment and reassignment events
-
 * Workspace creation
-
 * Invitation sent/accepted
-
 * Comments posted
-
 * Filter or sort usage
 
 ---
 
-## Technical Considerations
+## Technical Architecture
 
-### Technical Needs
+### Technology Stack
 
-* RESTful API backend for authentication, data management, and real-time updates.
+**Frontend:**
+- Next.js 14+ + TypeScript 5.8
+- Tailwind CSS v4
+- Radix UI components
+- React Query
+- Server-Sent Events or WebSockets (real-time)
 
-* Relational database for storing users, tasks, workspaces, comments, and permissions.
+**Backend:**
+- Kotlin 1.9+ + Quarkus 3.x
+- PostgreSQL 14+
+- Hibernate ORM with Panache
+- RESTEasy Reactive
+- SmallRye JWT authentication
+- Google OAuth 2.0
 
-* Front-end SPA rendered in the browser, powered by modern JS frameworks.
+**Infrastructure:**
+- RESTful API + WebSocket server
+- Relational database (PostgreSQL)
+- SMTP for email notifications
+- Hosting: TBD (AWS, Vercel, Railway)
 
-* Real-time sync layer (e.g., WebSockets or Pusher-like service) for collaborative features.
+### Data Model (High-Level)
 
-### Integration Points
+- **users** - Authentication, profiles
+- **workspaces** - Team workspaces
+- **workspace_members** - User-workspace-role mapping
+- **tasks** - Task data
+- **task_assignments** - Many-to-many task-user
+- **comments** - Task discussions
+- **notifications** - User notifications
 
-* OAuth or SSO provider for authentication (Google, email).
+### Security & Privacy
 
-* SMTP or transactional mail API for invite and notification emails.
-
-* Optional integration points: calendar sync, notifications (future phase).
-
-### Data Storage & Privacy
-
-* Secure, encrypted storage of user data both in transit and at rest.
-
-* GDPR-compliant data handling, including right-to-be-forgotten for deleted users.
-
-* Data access limited by role-based permission model.
+* **Authentication:** JWT tokens, Google OAuth
+* **Authorization:** Role-based access control (RBAC)
+* **Data Privacy:** GDPR-compliant, encrypted in transit and at rest
+* **Data Isolation:** Strict workspace boundaries
+* **Rate Limiting:** Prevent abuse
+* **Input Validation:** All user input sanitized
 
 ### Scalability & Performance
 
-* Scale-out architecture for backend instances as user base grows.
-
-* Efficient web sockets/message queue for real-time updates.
-
-* Optimize front-end for sub-second page load and updates.
+* **Stateless API:** Horizontal scaling of backend
+* **Database Optimization:** Indexes, connection pooling
+* **WebSocket Scaling:** Redis adapter for multi-instance support
+* **CDN:** Static assets
+* **Caching:** Strategic caching for read-heavy operations
 
 ### Potential Challenges
 
-* Handling complex real-time concurrency (e.g., simultaneous task edits).
-
-* Preventing data leakage (strong RBAC).
-
-* Ensuring smooth onboarding and first-use performance under load.
-
-* Basic DDoS and spam protection for open workspace invites.
+* Handling complex real-time concurrency (simultaneous edits)
+* Preventing data leakage (strong RBAC enforcement)
+* Ensuring smooth onboarding and first-use performance under load
+* Basic DDoS and spam protection for open workspace invites
+* WebSocket connection management at scale
 
 ---
 
-## Milestones & Sequencing
+## Development Roadmap
 
 ### Project Estimate
 
-* **Medium:** 2–4 weeks for initial MVP
+**Medium:** 2–4 weeks for initial MVP (with 1 full-stack engineer)
 
 ### Team Size & Composition
 
-* **Small Team:** 2 people
+**Small Team:** 2 people
+- 1 Full-stack engineer (backend, frontend, basic design)
+- 1 PM/designer hybrid (requirements, user stories, UX flows, validation)
 
-  * 1 Full-stack engineer (handles backend, frontend, basic design)
+### Implementation Phases
 
-  * 1 PM/designer hybrid (requirements, user stories, UX flows, validation)
+Follow the execution strategy defined in `docs/EXECUTION_STRATEGY.md` (Backend → Tests → Frontend for each feature).
 
-### Suggested Phases
+#### **Phase 1: Foundation (Week 1)**
 
-**Phase 1: MVP Platform (1 week)**
+**Features:** Authentication + Workspace Management
 
-* Key Deliverables:
+- Day 1-2: Database schema, migrations, types
+- Day 3-4: Backend API (auth, workspaces)
+- Day 5: Backend tests
+- Day 6-7: Frontend (auth flow, workspace setup)
 
-  * Simple workspace creation, user invite, task CRUD
-
-  * Basic multi-user authentication
-
-  * Single-page application UI
-
-* Dependencies:
-
-  * Email/auth provider
-
-**Phase 2: Collaborative Features (1 week)**
-
-* Key Deliverables:
-
-  * Assignable tasks
-
-  * Real-time updates (basic implementation)
-
-  * Task comments
-
-* Dependencies:
-
-  * Real-time sync layer
-
-**Phase 3: Notifications & UX Polish (1 week)**
-
-* Key Deliverables:
-
-  * In-app/email notifications
-
-  * Onboarding flow
-
-  * Filtering and sorting enhancements
-
-  * Accessibility and responsiveness audit
-
-* Dependencies:
-
-  * SMTP/mail provider
-
-**Phase 4: QA and Launch (Up to 1 week)**
-
-* Key Deliverables:
-
-  * Automated tests, manual QA
-
-  * Deploy to production
-
-  * Collect feedback, monitor metrics
-
-* Dependencies:
-
-  * Hosting, monitoring setup
+**Milestone:** Users can sign up, log in, create workspaces, invite members.
 
 ---
+
+#### **Phase 2: Core Task Management (Week 2)**
+
+**Features:** Task CRUD + Real-Time Sync
+
+- Day 1-2: Task backend (database, API)
+- Day 3: Backend tests
+- Day 4-5: Task frontend (forms, list, detail)
+- Day 6-7: WebSocket integration, real-time updates
+
+**Milestone:** Users can create, assign, complete tasks with real-time sync.
+
+---
+
+#### **Phase 3: Collaboration & Filters (Week 3)**
+
+**Features:** Notifications + Filters/Sorting
+
+- Day 1-2: Notification system (backend + email)
+- Day 3: Notification frontend
+- Day 4-5: Filtering and sorting (backend + frontend)
+- Day 6-7: Activity feed, polish, bug fixes
+
+**Milestone:** Users get notified, can filter/sort tasks, see activity history.
+
+---
+
+#### **Phase 4: Polish & Launch (Week 4)**
+
+**Focus:** Testing, UX polish, deployment
+
+- Day 1-2: End-to-end testing, bug fixes
+- Day 3: UX polish, accessibility audit
+- Day 4: Performance optimization
+- Day 5: Documentation, deployment prep
+- Day 6: Deploy to production
+- Day 7: Monitor, collect feedback
+
+**Milestone:** Production-ready app, users onboarded, feedback loop started.
+
+---
+
+## Future Enhancements (Post-MVP)
+
+### Phase 2 Features (Month 2-3)
+
+- **Comments & Discussions:** Threaded comments on tasks
+- **File Attachments:** Upload files to tasks
+- **Recurring Tasks:** Auto-create periodic tasks
+- **Task Templates:** Reusable task blueprints
+- **Time Tracking:** Log time spent on tasks
+
+### Phase 3 Features (Month 4-6)
+
+- **Mobile Apps:** iOS and Android native apps
+- **Calendar Integration:** Sync tasks with Google Calendar
+- **Advanced Analytics:** Task completion trends, team productivity
+- **Custom Fields:** User-defined task metadata
+- **Integrations:** Slack, Discord, GitHub webhooks
+
+### Long-Term Vision
+
+- **AI Assistant:** Suggest task assignments, predict delays
+- **Workflow Automation:** If-then rules, auto-assignments
+- **Enterprise Features:** SSO (SAML), audit logs, SLA tracking
+- **White-Label:** Custom branding for enterprise customers
+
+---
+
+## References
+
+- **Execution Strategy:** `docs/EXECUTION_STRATEGY.md`
+- **Feature Specs:** `docs/specs/features/`
+- **Technical Specs:** `docs/specs/`
+- **Architecture Context:** `docs/CONTEXT.md`
+
+---
+
+## Document History
+
+- **v1.0** - Initial PRD (Oct 2025)
+- **v1.1** - Extracted features to separate files (Oct 2025)

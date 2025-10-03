@@ -3,17 +3,27 @@
 - Always read and pretend you are docs/agents/agent-fullstack.md
 - Always use radix-ui components in atomic design components
 - Always favor atomic design components instead of writing new ones
+- Follow execution strategy defined in docs/EXECUTION_STRATEGY.md (Backend → Tests → Frontend)
 
 ## Tech Stack
 
-- **React 19** - Latest React with concurrent features
+### Frontend
+- **Next.js 14+** - React framework with SSR/SSG
 - **TypeScript 5.8** - Type-safe development
-- **Vite 7** - Lightning-fast build tool and dev server
 - **Tailwind CSS v4** - Utility-first CSS framework
 - **Radix UI** - Unstyled, accessible component primitives
-- **i18next** - Internationalization framework
-- **ESLint & Prettier** - Code quality and formatting
-- **PostCSS & Autoprefixer** - CSS processing
+- **React Query** - Server state management
+- **Zod** - Runtime validation and type inference
+
+### Backend
+- **Kotlin 1.9+** - Modern JVM language
+- **Quarkus 3.x** - Supersonic Subatomic Java framework
+- **PostgreSQL 14+** - Relational database
+- **Hibernate ORM with Panache** - Database ORM
+- **JWT (SmallRye JWT)** - JWT authentication
+- **BCrypt** - Password hashing
+- **RESTEasy Reactive** - Reactive REST endpoints
+- **Jackson** - JSON serialization
 
 ## File listing
 
@@ -25,35 +35,59 @@
 │   │   ├── agent-visual-designer.md
 │   │   └── cleanup-prompt.md
 │   ├── specs/
-│   │   └── authentication.md
-│   ├── CONTEXT.md
+│   │   ├── features/
+│   │   │   └── authentication.md      # Feature overview with Gherkin scenarios
+│   │   ├── frontend-auth.md           # React components & state management
+│   │   ├── backend-api-auth.md        # Backend API endpoints
+│   │   ├── backend-architecture.md    # Backend structure & patterns
+│   │   ├── database-schema-auth.md    # PostgreSQL schema
+│   │   └── types-auth.md              # TypeScript types & validation
+│   ├── CONTEXT.md                     # This file
+│   ├── EXECUTION_STRATEGY.md          # How to implement features (Backend → Tests → Frontend)
 │   └── HUMAN_INSTRUCTION.md
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── components/
-│   │   ├── atoms/          # Basic UI primitives (Button, Input, etc.)
-│   │   ├── molecules/      # Composite components (Card, FormField)
-│   │   ├── organisms/      # Complex components (Form, Header)
-│   │   ├── pages/          # Page components
-│   │   └── templates/      # Layout templates
-│   ├── App.tsx
-│   ├── index.css
-│   ├── main.tsx
-│   └── vite-env.d.ts
+├── backend/                # Backend (Kotlin + Quarkus)
+│   ├── src/main/
+│   │   ├── kotlin/
+│   │   │   └── com/todo/
+│   │   │       ├── config/      # Configuration classes
+│   │   │       ├── domain/      # Domain models (entities)
+│   │   │       ├── repository/  # Database repositories
+│   │   │       ├── service/     # Business logic
+│   │   │       ├── resource/    # REST resources (controllers)
+│   │   │       ├── dto/         # Data Transfer Objects
+│   │   │       ├── security/    # Auth & security
+│   │   │       └── util/        # Utilities
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       └── db/migration/    # Flyway migrations
+│   ├── src/test/kotlin/         # Tests
+│   ├── build.gradle.kts         # Gradle build config
+│   └── README.md
+├── frontend/               # Frontend (Next.js)
+│   ├── src/
+│   │   ├── app/            # Next.js 14 app directory
+│   │   │   ├── (auth)/     # Auth routes
+│   │   │   ├── (dashboard)/ # Dashboard routes
+│   │   │   ├── api/        # API routes (optional)
+│   │   │   ├── layout.tsx  # Root layout
+│   │   │   └── page.tsx    # Home page
+│   │   ├── components/     # React components
+│   │   │   ├── ui/         # Reusable UI components
+│   │   │   └── features/   # Feature-specific components
+│   │   ├── lib/            # Utilities & helpers
+│   │   │   ├── api.ts      # API client
+│   │   │   └── utils.ts    # Utility functions
+│   │   └── types/          # TypeScript types
+│   ├── public/             # Static assets
+│   ├── tailwind.config.ts
+│   ├── next.config.js
+│   ├── package.json
+│   └── README.md
+├── shared/                 # Shared types/utilities (optional)
+│   └── types/              # Shared TypeScript types
+└── docs/                   # Documentation (unchanged)
 ├── .gitignore
-├── .prettierrc
 ├── CLAUDE.md
 ├── README.md
-├── TODO_PRD.md
-├── eslint.config.js
-├── index.html
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── tailwind.config.js
-├── tsconfig.app.json
-├── tsconfig.json
-├── tsconfig.node.json
-└── vite.config.ts
+└── TODO_PRD.md
 ```
