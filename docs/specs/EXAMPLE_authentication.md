@@ -66,7 +66,7 @@ Scenario: Logout
 
 ## 3. Technical requirements
 
-This section details the engineering work for each Gherkin scenario. For detailed API specifications, refer to `/docs/spec/openapi/authentication.yaml`.
+This section details the engineering work for each Gherkin scenario.
 
 ### 3.1 Backend Functionality
 
@@ -147,15 +147,15 @@ This section details the engineering work for each Gherkin scenario. For detaile
 ## 5. Implementation Plan
 
 ### Step 1: Define TypeScript Types
-**Location:** `types/`
+**Location:** `src/types/` (to be created)
 - [ ] Create `User` type with id, email, fullName, password (hashed), isVerified, createdAt, updatedAt
 - [ ] Create `EmailVerificationToken` type with id, userId, token, expiresAt, createdAt
 - [ ] Create `TokenBlacklist` type with id, tokenJti, userId, expiresAt, createdAt
 - [ ] Create `LoginRequest` and `RegisterRequest` types for API payloads
 - [ ] Create `AuthResponse` type with user info and JWT token
 
-### Step 2: Define OpenAPI Specification
-**Location:** `docs/spec/openapi/authentication.yaml`
+### Step 2: Define API Endpoints
+**Location:** `src/api/` (to be created)
 - [ ] Define POST /api/auth/register endpoint using RegisterRequest type
 - [ ] Define POST /api/auth/login endpoint using LoginRequest type
 - [ ] Define POST /api/auth/logout endpoint with JWT auth
@@ -164,7 +164,7 @@ This section details the engineering work for each Gherkin scenario. For detaile
 - [ ] Add JWT security scheme definition
 
 ### Step 3: Implement Database Schema
-**Location:** `src/server/database/`
+**Location:** `src/database/` (to be created)
 - [ ] Create users table migration with all required fields
 - [ ] Create emailVerificationTokens table migration with foreign key to users
 - [ ] Create tokenBlacklist table migration with foreign key to users
@@ -172,7 +172,7 @@ This section details the engineering work for each Gherkin scenario. For detaile
 - [ ] Implement automatic cleanup for expired tokens
 
 ### Step 4: Implement Server Authentication Logic
-**Location:** `src/server/`
+**Location:** `src/server/` (to be created)
 - [ ] Create auth middleware for JWT validation
 - [ ] Implement bcrypt password hashing utility
 - [ ] Create registration endpoint with email validation
@@ -183,7 +183,7 @@ This section details the engineering work for each Gherkin scenario. For detaile
 - [ ] Add rate limiting for auth endpoints
 
 ### Step 5: Implement Client Authentication Components
-**Location:** `src/client/`
+**Location:** `src/components/`
 - [ ] Create RegisterForm component with validation
 - [ ] Create LoginForm component with error handling
 - [ ] Implement EmailVerification success/error pages
@@ -193,7 +193,7 @@ This section details the engineering work for each Gherkin scenario. For detaile
 - [ ] Configure axios interceptors for JWT handling
 
 ### Step 6: Connect Client to Backend
-**Location:** `src/client/api/`
+**Location:** `src/api/` (to be created)
 - [ ] Create auth API service using generated types
 - [ ] Implement register function calling POST /api/auth/register
 - [ ] Implement login function calling POST /api/auth/login
@@ -203,7 +203,7 @@ This section details the engineering work for each Gherkin scenario. For detaile
 - [ ] Set up automatic token refresh mechanism
 
 ### Step 7: Implement User Flows
-**Location:** `src/client/pages/` and `src/client/routes/`
+**Location:** `src/pages/` and `src/routes/` (to be created)
 - [ ] Create signup page using RegisterForm
 - [ ] Create login page using LoginForm
 - [ ] Build email verification landing page

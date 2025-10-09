@@ -1,7 +1,6 @@
 # Context and guidelines
 - Ignore docs/HUMAN_INSTRUCTION.md
 - Always read and pretend you are docs/agents/agent-fullstack.md
-- Always use radix-ui components in atomic design components
 - Always favor atomic design components instead of writing new ones
 
 ## Tech Stack
@@ -10,7 +9,6 @@
 - **TypeScript 5.8** - Type-safe development
 - **Vite 7** - Lightning-fast build tool and dev server
 - **Tailwind CSS v4** - Utility-first CSS framework
-- **Radix UI** - Unstyled, accessible component primitives
 - **i18next** - Internationalization framework
 - **ESLint & Prettier** - Code quality and formatting
 - **PostCSS & Autoprefixer** - CSS processing
@@ -22,7 +20,6 @@
 │   ├── agents/
 │   │   ├── agent-fullstack.md
 │   │   ├── agent-product-designer.md
-│   │   ├── agent-visual-designer.md
 │   │   └── cleanup-prompt.md
 │   ├── specs/
 │   │   └── authentication.md
@@ -45,7 +42,7 @@
 ├── .prettierrc
 ├── CLAUDE.md
 ├── README.md
-├── TODO_PRD.md
+├── EXAMPLE_PRD.md
 ├── eslint.config.js
 ├── index.html
 ├── package-lock.json
