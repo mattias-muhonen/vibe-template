@@ -1,1 +1,1 @@
-Read docs/CONTEXT.md for project context and guidelines
+Read README.md for project context and guidelines

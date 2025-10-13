@@ -47,16 +47,42 @@ npm run lint
 ## Project Structure
 
 ```
-src/
-├── components/
-│   ├── atoms/          # Basic UI components (Button, Input, etc.)
-│   ├── molecules/      # Composite components (Card, FormField)
-│   ├── organisms/      # Complex components (Form, Header)
-│   ├── pages/          # Page components
-│   └── templates/      # Layout templates
-├── App.tsx             # Main app component
-├── main.tsx           # Entry point
-└── index.css          # Global styles
+├── docs/
+│   ├── agents/
+│   │   ├── agent-fullstack.md
+│   │   ├── agent-product-designer.md
+│   │   └── cleanup-prompt.md
+│   ├── specs/
+│   │   └── EXAMPLE_approval.md
+│   ├── EXAMPLE_PRD.md
+│   └── HUMAN_INSTRUCTION.md
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── components/
+│   │   ├── atoms/          # Basic UI primitives (Button, Input, etc.)
+│   │   ├── molecules/      # Composite components (Card, FormField)
+│   │   ├── organisms/      # Complex components (Form, Header)
+│   │   ├── pages/          # Page components
+│   │   └── templates/      # Layout templates
+│   ├── App.tsx
+│   ├── index.css
+│   ├── main.tsx
+│   └── vite-env.d.ts
+├── .gitignore
+├── .prettierrc
+├── CLAUDE.md
+├── README.md
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── tsconfig.app.json
+├── tsconfig.json
+├── tsconfig.node.json
+└── vite.config.ts
 ```
 
 ## Component Library
@@ -87,31 +113,10 @@ View the complete design system at `/` route when running the development server
 
 ## Tech Stack
 
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite** - Build tool
-- **Tailwind CSS** - Utility CSS
-- **i18next** - Internationalization
-- **ESLint/Prettier** - Code formatting
-
-## Getting Started with AI Development
-
-Note that the repo has a `CLAUDE.md` and `agents.md` files but they only point to an AI agnostic `CONTEXT.md` file. Your tooling may require something different to hardwire the project context.
-
-1. Check out the contents in `docs/`
-2. Start by reading `HUMAN_INSTRUCTION.md`
-3. Check out `CONTEXT.md` for a "1-minute introduction" into the project
-4. Check out `agents/`, there are some helpers, take special note of `cleanup-prompt.md` contents
-5. Check out `specs/`, there is one "spec" document there that describes an authentication feature.
-
-## Get Coding
-
-1. You should have a PRD as to what the product should be. Example provided in `EXAMPLE_PRD.md`
-2. Goal is to build a UI level mock MVP
-3. Use the agent personalities or draft your own
-4. Create new spec files based on the template, tweak the template and play around
-5. Keep `CONTEXT.md` up to date
-
-## License
-
-Private
+- **React 19** - Latest React with concurrent features
+- **TypeScript 5.8** - Type-safe development
+- **Vite 7** - Lightning-fast build tool and dev server
+- **Tailwind CSS v4** - Utility-first CSS framework
+- **i18next** - Internationalization framework
+- **ESLint & Prettier** - Code quality and formatting
+- **PostCSS & Autoprefixer** - CSS processing

@@ -35,6 +35,7 @@ You are **Archimedes**, an expert **systems architect** with deep experience in 
 
 ## Sources
 - src/ contains the main application code
+- docs/ contains project documentation and specs
 - scripts/ contains database setup and seed data (to be created)
 
 ## Implementing
